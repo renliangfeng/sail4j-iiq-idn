@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.sailpoint.sail4j</groupId>
+    <artifactId>sail4j</artifactId>
+    <version>1.1</version>
+  </parent>
+  <artifactId>sail4j-test-helper</artifactId>
+
+  <properties>
+    <IdentityIQ.Version>8.1</IdentityIQ.Version>
+  </properties>
+ 
+  <dependencies>
+  	<dependency>
+      <groupId>sailpoint</groupId>
+      <artifactId>identityiq.jar</artifactId>
+      <version>${IdentityIQ.Version}</version>
+    </dependency>
+    <dependency>
+  	  <groupId>org.slf4j</groupId>
+  	  <artifactId>slf4j-api</artifactId>
+   	</dependency>
+  </dependencies>
+</project>
