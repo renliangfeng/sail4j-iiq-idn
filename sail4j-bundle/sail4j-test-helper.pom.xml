@@ -10,7 +10,7 @@
   <artifactId>sail4j-test-helper</artifactId>
 
   <properties>
-    <IdentityIQ.Version>8.1</IdentityIQ.Version>
+    <IdentityIQ.Version>8.3</IdentityIQ.Version>
   </properties>
  
   <dependencies>
