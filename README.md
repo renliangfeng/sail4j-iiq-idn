@@ -26,31 +26,98 @@ Sail4j is a tool to convert Java code to Beanshell code used by IdentityIQ or Id
 
 # Configure Sail4j in SSB
 
-- Add the following to build.xml file:
+- Download SSB from the following SailPoint Compass page:
 
- 		<!-- generate Rules from Java code -->
-    	<taskdef name="genRule" classname="com.sailpoint.sail4j.ant.GenerateRuleTask">
-			<classpath>
-	            <fileset dir="lib/sail4j">
-	            	<include name="*.jar"/>
-	          	</fileset>
-	          	<fileset dir="lib">
-	            	<include name="*.jar"/>
-	          	</fileset>
-	        </classpath>
-		</taskdef>
-    	<genRule sourceFilePath="src/com/demo/rule" destinationXmlFilePath="config/Rule"/>
-    	
-- Copy the following jar files to the folder **lib/sail4j**:
+		https://community.sailpoint.com/t5/Professional-Services/Services-Standard-Build-SSB-v7-0-1/ta-p/190496
+
+
+- Create a new folder **lib/sail4j** and copy the following jar files to this folder:
+  
+  
 
  		commons-collections-3.2.jar
  		slf4j-api-1.6.1.jar
  		javaparser-core-3.18.0.jar
+		velocity-1.6.2.jar
+ 		velocity-tools-2.0.jar
+
  		sail4j-ant-task-1.1.jar
  		sail4j-api-1.1.jar
  		sail4j-transform-1.1.jar
- 		velocity-1.6.2.jar
- 		velocity-tools-2.0.jar
+		sail4j-test-helper-1.1
+ 		
+	Note: you can either download them from internet or copy directly from folder *s**ail4j-iiq-idn/sail4j-bundle*** and *s**ail4j-iiq-idn/dependency-jars***
+
+- When using Sail4J, you may want to write JUnit Test Cases to test your Java code. Create a new folder **lib/junit** and copy the following jar files to this folder:
+	
+
+ 		junit.jar
+ 		mockito-core-2.23.4.jar
+ 		org.hamcrest.core_1.3.0.v20180420-1519.jar
+	Note: you can either download them from internet or copy directly from folder *s**ail4j-iiq-idn/dependency-jars***
+
+- When using Sail4J, you may want to write JUnit Test Cases to test your Java code. Add the following to ***scripts/build.java.xml***.
+
+	<target name="runUnitTests" depends="compile">
+		<javac srcdir="test-src" source="1.8" target="1.8" destdir="test/classes" debug="true" 	classpathref="build.compile.classpath" 
+			includeantruntime="last"/>
+		
+		<!-- run junit tests -->
+    	<junit printsummary="yes" haltonfailure="yes">
+    		<classpath>
+				<pathelement location="${build}/classes" />
+    			<pathelement location="test/classes" />
+    			<path refid="build.compile.classpath"/>
+    			<fileset dir="lib/junit">
+	            		<include name="*.jar"/>
+	          	</fileset>
+			</classpath>
+    		<formatter type="plain" />
+	        <formatter type="xml" />
+	        <batchtest todir="test/report">
+	            <fileset dir="test-src">
+	                <include name="**/*Test*.java" />
+	            </fileset>
+	        </batchtest>
+        </junit>
+    </target>
+
+- Update the ***main*** target of **build.xml** file to add the following 2 sections:
+
+	The following section is added just after `<antcall inheritall="true" target="compile"/>` to run JUnit test cases. You can skip junit tests by passing parameter 'skipUnitTest' as true in the command line. 
+
+		<!-- run junit tests -->
+    	<if>
+    	    <not>
+    	       <equals arg1="${skipUnitTest}" arg2="true"/>
+    	     </not>
+    	    <then>
+    	       <antcall inheritall="true" target="runUnitTests"/>  	
+    	    </then>
+    	</if>
+
+
+	The following section is added just before `<antcall inheritall="true" target="prepareCustomConfig"/>`. This section is to configure how the Rule XML files are generated. You can specify the location of Java source files and the folder where the Rule XML files will be written.
+
+       <!-- generate Rules from Java code -->
+       <taskdef name="genRule" classname="com.sailpoint.sail4j.ant.GenerateRuleTask">
+	     <classpath>
+	      <fileset dir="lib/sail4j">
+	        <include name="*.jar"/>
+	      </fileset>
+	      <fileset dir="lib">
+	        <include name="*.jar"/>
+	      </fileset>
+	     </classpath>
+	   </taskdef>
+       <genRule sourceFilePath="src/sail4j/iam/rule" destinationXmlFilePath="config/Rule"/>
+    	
+- Update the ***war*** target of **build.xml** file to add the following line at the beginning:
+  
+  This is line is to remove java classes (which are used to generate Rule XMLs) from the IdentityIQ application. It is recommended to use the special package name (such as sail4j in this example) for these types of Jave classes to make it easy to delete them.
+
+		<!-- exclude the java classes used by Sail4j to generate Ruels -->
+    	<delete dir="${build.iiqBinaryExtract}/WEB-INF/classes/sail4j"/>
 
 
 # Setup Maven to use Sail4j
