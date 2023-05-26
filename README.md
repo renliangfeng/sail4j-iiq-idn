@@ -84,7 +84,7 @@ Sail4j is a tool to convert Java code to Beanshell code used by IdentityIQ or Id
 
 - Update the ***main*** target of **build.xml** file to add the following 2 sections:
 
-	The following section is added just after `<antcall inheritall="true" target="compile"/>` to run JUnit test cases. You can skip junit tests by passing parameter 'skipUnitTest' as true in the command line. 
+	The following section should be added just after `<antcall inheritall="true" target="compile"/>`. It is configured to run JUnit test cases. You can skip junit tests by passing parameter 'skipUnitTest' as true in the command line. 
 
 		<!-- run junit tests -->
     	<if>
@@ -97,7 +97,7 @@ Sail4j is a tool to convert Java code to Beanshell code used by IdentityIQ or Id
     	</if>
 
 
-	The following section is added just before `<antcall inheritall="true" target="prepareCustomConfig"/>`. This section is to configure how the Rule XML files are generated. You can specify the location of Java source files and the folder where the Rule XML files will be written.
+	The following section should be added just before `<antcall inheritall="true" target="prepareCustomConfig"/>`. It is to configure how the Rule XML files are generated. You can specify the location of Java source files and the folder where the Rule XML files will be written.
 
        <!-- generate Rules from Java code -->
        <taskdef name="genRule" classname="com.sailpoint.sail4j.ant.GenerateRuleTask">
@@ -114,7 +114,7 @@ Sail4j is a tool to convert Java code to Beanshell code used by IdentityIQ or Id
     	
 - Update the ***war*** target of **build.xml** file to add the following line at the beginning:
   
-  This is line is to remove java classes (which are used to generate Rule XMLs) from the IdentityIQ application. It is recommended to use the special package name (such as sail4j in this example) for these types of Jave classes to make it easy to delete them.
+  This line is to remove java classes (which are used to generate Rule XMLs) from the IdentityIQ application. It is recommended to use the special package name (such as sail4j in this example) for these types of Jave classes to make it easy to delete them.
 
 		<!-- exclude the java classes used by Sail4j to generate Ruels -->
     	<delete dir="${build.iiqBinaryExtract}/WEB-INF/classes/sail4j"/>
@@ -162,7 +162,21 @@ Download Apache Maven 3.6.x or higher from [https://maven.apache.org/download.cg
 - Import the project directory into Eclipse (or Intellij) as a Maven project.
 
 # Use Sail4j to develop Rule
--  You develop your IIQ or IDN Rule in a standard Java class but use Sail4j annotations to describe Rule. Here is an example:
+## Sail4j Annotations
+You develop your IIQ or IDN Rule in a standard Java class but use Sail4j annotations to describe Rule. 
+
+Annotations are used to control how the rule should be generated. There are 3 annotations available for use:
+- **SailPointRuleName**
+  
+  Class level annotation. You use this to define the rule name, rule type, referencedRules etc.
+- **SailPointRuleMainBody**
+  
+  Method level annotation. Use this annotation to indicate the code inside this method will be used as the main body of the Rule.
+- **IgnoredBySailPointRule**
+  
+  Method and field level annotation. Use this annotation to indicate the field or method should not be included when the Rule is generated.
+
+Here is an example:
 
  		package com.demo.rule;
  		
@@ -280,7 +294,12 @@ Download Apache Maven 3.6.x or higher from [https://maven.apache.org/download.cg
 				}
 			}
 
-- Then when you run SSB or Maven build command, Sail4j will covert the java classes to Rules based on the values you specified in the annotations (such as Rule name, Rule type, Rule file name, dependent rule library etc.). This approach of development provides a few key benefits:
-	- The Rule will be gareented to be syntax error free. Your Jave IDE such as Eclipse or Intellij will do the syntax check for you when you develop your Rule.
-	- You can write unit test code to test your Rules. There are large collection of libraries in the Java open-source ecosystem that you use to test your code. For example, you can use JUnit and Mockito to write unit test cases and simulate IdentityIQ or IdentityNow API.  
-This repository demonstrate how to use Sail4j to develop Rules for IdentityIQ or IdentityNow projects. 
+## Generate Rule XMLs
+When you run SSB command (`build.sh` or `ant main`)or Maven build command (`mvn install` or `mvn package`), Sail4j will covert the java classes to Rules based on the values you specified in the annotations (such as Rule name, Rule type, Rule file name, dependent rule library etc.). If it passes all the JUnit Tests, the Rule XMLs will be genereated under the folder you've defined.
+
+
+# Why Use Sail4j
+
+Using Sail4j to develop Rule provides a few benefits. Here are the 2 main ones:
+- The Rule will be gareented to be syntax error free. Your Jave IDE such as Eclipse or Intellij will do the syntax check for you when you develop your Rules.
+- It provides an opportunities to write unit test code to test your Rules. There are large collection of libraries in the Java open-source ecosystem that you use to test your code. For example, you can use JUnit and Mockito to write unit test cases and simulate IdentityIQ or IdentityNow API. 
