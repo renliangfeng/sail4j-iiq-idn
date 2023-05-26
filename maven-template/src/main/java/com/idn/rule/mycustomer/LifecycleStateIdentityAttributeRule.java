@@ -45,7 +45,7 @@ import sailpoint.object.QueryOptions;
  * @version 1.2
  * @since 2020-06-01
  */
-@SailPointRule(name = "Lifecycle State", type = RuleType.IDENTITY_ATTRIBUTE, subFolder = "/MyCustomer/mycustomer-test.com.au/rules")
+@SailPointRule(name = "Lifecycle State", type = RuleType.IDENTITY_ATTRIBUTE, subFolder = "/MyCustomer/mycustomer-test.com.au")
 public class LifecycleStateIdentityAttributeRule {
 	@IgnoredBySailPointRule
 	Log log;

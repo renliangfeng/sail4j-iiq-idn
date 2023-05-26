@@ -1,18 +1,4 @@
 #!/bin/bash
-# This script will install all jar files in the WEB-INF/lib directory of an IdentityIQ release
-# to the local repository using the mvn:install command.
-
-# Original Author: Indranil Chakraborty (indranil.chakraborty@sailpoint.com)
-# Version: 0.1
-# Date: 30-Jun-2020
-
-# Usage:
-# 1. Set the values for the below properties
-# 2. Ensure that the execution environment has Maven installed and configured to write to the target repository
-# 3. Execute script
-
-# Note that the environment on which this script is run must have Maven installed and on the path
-
 # The version of IdentityIQ; this is used to determine which zip file to extract and is used as a namespace separator
 export IIQ_BASE_VERSION=8.3
 # The base directory in which the IdentityIQ zip files are present
