@@ -146,7 +146,7 @@ Download Apache Maven 3.6.x or higher from [https://maven.apache.org/download.cg
     		<IdentityIQ.Version>8.3</IdentityIQ.Version>
   		</properties>
 
-- Go to folder **sail4j-iiq-idn/mvn-install** to run the **install-jars.sh**.
+- Go to folder **sail4j-iiq-idn/mvn-install** to run the **install-jars.sh** (or **install-jars.bat** in Windows).
 
 		./install-jars.sh
 
