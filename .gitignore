@@ -20,6 +20,8 @@ dist/
 target/
 dist/
 
+mvn-install/identityiq.jar
+
 # JetBrains IDE
 .idea/
 
