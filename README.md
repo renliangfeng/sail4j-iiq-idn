@@ -129,26 +129,30 @@ Download Apache Maven 3.6.x or higher from [https://maven.apache.org/download.cg
  		export M2_HOME=/Users/bruce.ren/Desktop/tools-install/apache-maven-3.6.3
 		...
 		export PATH=$PATH:$ANT_HOME/bin:$M2_HOME/bin
+
+**Please note:** *currently if you use maven 3.9.x, you will experience error when executing the script install-iiq-jars.sh (refer to the sections below). You are recommmended to use 3.8.x before we resolve this issue. Also the scripts provided are shell scripts supported by Linux or Mac OS. If your OS is Windows, consider use WSL to run the shell scripts (or you may have other workaround).*
                                 
-### Install Sail4j and IdentityIQ jar files into local Maven repository
-- Download the IdentityIQ base GA (e.g. **IdentityIQ 8.3.zip**) from SailPoint Compass. The version of IIQ doesn't matter because it is only used to compile your java code which will be eventually converted to IIQ or IDN Rules. Unzip the zip file and copy ***identityiq.jar*** to the folder **sail4j-iiq-idn/mvn-install**. Please note ***identityiq.jar*** is inside the folder (*WEB-INF/lib*) of ***identityiq.war*** which is inside IdentityIQ zip file. There are different ways to unpack the war file. For example in MacOS or Linux, you can run the following command to unpack ***identityiq.war*** under the folder containing the war file: 
+### Install IdentityIQ and dependencies jars into local Maven repository
+- Download the IdentityIQ base GA (e.g. **IdentityIQ 8.3.zip**) from Compass. The version of IIQ doesn't matter because it is only used to compile your java code which will be eventually converted to IIQ or IDN Rules.
 
-		unzip -q -d . identityiq.war
-       
+- Open the file **sail4j-iiq-idn/mvn-install/install-iiq-jars.sh** to modify the following 2 lines to match the version and location of IdentityIQ you just download:
 
-- Modify the file **sail4j-iiq-idn/mvn-install/identityiq.pom.xml** to update the version to match the version of IdentityIQ you just download:
+ 		export IIQ_VERSION=8.3
+ 		export BASE_SOFTWARE_PATH=/Users/bruce.ren/Desktop/tools-install/iiq-install/base	            	
+- Go to folder **sail4j-iiq-idn/mvn-install** to run the **install-iiq-jars.sh**, it takes a few minutes to install all the jar files.
 
- 		<version>8.3</version>
+		./install-iiq-jars.sh
 
-- Modify the file **sail4j-iiq-idn/sail4j-bundle/sail4j-test-helper.pom.xml** to update the version of IdentityIQ you just download:
+### Install Sail4j jars into local Maven repository
+- Modify the file **sail4j-iiq-idn/sail4j-bundle/sail4j-test-helper.pom.xml** to update the version of IdentityIQ configured in the previous step:
 
 		<properties>
     		<IdentityIQ.Version>8.3</IdentityIQ.Version>
   		</properties>
 
-- Go to folder **sail4j-iiq-idn/mvn-install** to run the **install-jars.sh** (or **install-jars.bat** in Windows).
+- Go to folder **sail4j-iiq-idn/mvn-install** to run the **install-sail4j-jars.sh**.
 
-		./install-jars.sh
+		./install-sail4j-jars.sh
 
 
 ### Create Maven project
@@ -156,8 +160,7 @@ Download Apache Maven 3.6.x or higher from [https://maven.apache.org/download.cg
 
        sail4j-iiq-idn/maven-template
 
-- Modify pom.xml to update groupId and artifactId if necessary. Add additional dependencies if required. Please note this folder also includes 2 examples (with corresponding Junit test cases) for the reference.
-
+- Modify pom.xml to update groupId and artifactId if necessary. Please note this folder also includes 2 examples (with corresponding Junit test cases) for the reference.
 - Import the project directory into Eclipse (or Intellij) as a Maven project.
 
 # Use Sail4j to develop Rule
