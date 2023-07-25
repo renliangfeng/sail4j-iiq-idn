@@ -130,7 +130,7 @@ Download Apache Maven 3.6.x or higher from [https://maven.apache.org/download.cg
 		...
 		export PATH=$PATH:$ANT_HOME/bin:$M2_HOME/bin
 
-**Please note:** *currently if you use maven 3.9.x, you will experience error when executing the script install-iiq-jars.sh (refer to the sections below). You are recommmended to use 3.8.x before we resolve this issue. Also the scripts provided are shell scripts supported by Linux or Mac OS. If your OS is Windows, consider use WSL to run the shell scripts (or you may have other workaround).*
+**Please note:** *currently if you use maven 3.9.x, you will experience error when executing the script install-iiq-jars.sh (refer to the sections below). You are recommmended to use 3.8.x before we resolve this issue. Also the scripts provided are shell scripts supported by Linux or Mac OS. If your OS is Windows, consider use WSL to run the shell scripts (or use other workaround).*
                                 
 ### Install IdentityIQ and dependencies jars into local Maven repository
 - Download the IdentityIQ base GA (e.g. **IdentityIQ 8.3.zip**) from Compass. The version of IIQ doesn't matter because it is only used to compile your java code which will be eventually converted to IIQ or IDN Rules.
