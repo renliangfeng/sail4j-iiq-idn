@@ -139,7 +139,7 @@ Download Apache Maven 3.6.x or higher from [https://maven.apache.org/download.cg
 
  		export IIQ_VERSION=8.3
  		export BASE_SOFTWARE_PATH=/Users/bruce.ren/Desktop/tools-install/iiq-install/base	            	
-- Go to folder **sail4j-iiq-idn/mvn-install** to run the **install-iiq-jars.sh**, it takes a few minutes to install all the jar files.
+- Go to folder **sail4j-iiq-idn/mvn-install** to run the **install-iiq-jars.sh**, it takes a few minutes to install all the jar files. If you use Windows, you may run the PowerShell Script **install-iiq-jars.ps1** 
 
 		./install-iiq-jars.sh
 
@@ -150,7 +150,7 @@ Download Apache Maven 3.6.x or higher from [https://maven.apache.org/download.cg
     		<IdentityIQ.Version>8.3</IdentityIQ.Version>
   		</properties>
 
-- Go to folder **sail4j-iiq-idn/mvn-install** to run the **install-sail4j-jars.sh**.
+- Go to folder **sail4j-iiq-idn/mvn-install** to run the **install-sail4j-jars.sh**. If you use Windows, you may run the PowerShell Script **install-sail4j-jars.ps1** 
 
 		./install-sail4j-jars.sh
 
