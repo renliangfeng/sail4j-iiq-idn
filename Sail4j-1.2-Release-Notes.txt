@@ -1,0 +1,7 @@
+Sail4j Release Notes
+
+New features since 1.2:
+
+1. SailPointRule annotation provides a new parameter "withoutSignature" to suppress signature while generating Rule XML file. 
+
+2. Sail4j will automatically resolve rule reference based on java class dependency. New field level annotation "SailPointReferencedRule" is introduced to support this. If static methods are used, rule reference will be resolved automatically. Refer to the document for more details of this new feature.
