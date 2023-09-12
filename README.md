@@ -41,10 +41,10 @@ Sail4j is a tool to convert Java code to Beanshell code used by IdentityIQ or Id
 		velocity-1.6.2.jar
  		velocity-tools-2.0.jar
 
- 		sail4j-ant-task-1.1.jar
- 		sail4j-api-1.1.jar
- 		sail4j-transform-1.1.jar
-		sail4j-test-helper-1.1
+ 		sail4j-ant-task-1.2.jar
+ 		sail4j-api-1.2.jar
+ 		sail4j-transform-1.2.jar
+		sail4j-test-helper-1.2
  		
 	Note: the folders *s**ail4j-iiq-idn/sail4j-bundle*** and ***sail4j-iiq-idn/dependency-jars*** inside this repository include these jar files or you can download them from internet.
 
