@@ -183,7 +183,39 @@ Annotations are used to control how the rule should be generated. There are 4 an
 	- When static methods are used, you **DO NOT** need to use this annotation, Sail4j will automatically figure out the rule reference if the java class of calling method (static) is linked to a Rule (or Rule Library).
 	- DO NOT use local variable for Referenced Rule Java class as Sail4j is not able to resovle Rule refrence automatically when using local variable. Always use class property/field Referenced Rule (or simply use static method). When declaring class propety/field, ensure the field name is unique in the class and the same name is not used by other local variables. Otherwise it will generate unexpected BeanShell code.
 	- The resolved referened Rule(s) will be merged with what is specified via **referencedRules** parameter of **SailPointRule** annotation.
+	- If you have a set method for the Referenced Rule property (like the example below), make sure to apply **IgnoredBySailPointRule** annotation to that method so that this method will not be present in the generated Rule XML.
 
+			@SailPointReferencedRule
+			private MyRuleLibrary myRuleLibrary;
+	
+			@IgnoredBySailPointRule
+			public void setMyRuleLibrary(MyRuleLibrary myRuleLibrary) {
+				this.myRuleLibrary = myRuleLibrary;
+			}
+     	
+		However, if you set the value of Referenced Rule property through the constructor (like the example below), no annotation is required as java contructor is not used by IdentityIQ Rule and will never be generated in Rule XML.
+		   
+		    public class MyRule {
+	
+				@SailPointReferencedRule
+				private MyRuleLibrary myRuleLibrary;
+	
+				public MyRule(MyRuleLibrary myRuleLibrary) {
+					this.myRuleLibrary = myRuleLibrary;
+				}
+
+	**Tips:**
+	- If you want to make your code testable, you can declare the Referenced Rule property type as an interface. This allows you to inject a mocked Referenced Rule object using mock framework like mockito in your junit test cases. Here is the example:
+
+			public class MyRule {
+	
+				@SailPointReferencedRule(ruleClass = MyRuleLibrary.class)
+				private MyRuleLibraryInteface myRuleLibrary;
+	
+				public MyRule(MyRuleLibraryInteface myRuleLibrary) {
+					this.myRuleLibrary = myRuleLibrary;
+				}
+		In this example, *MyRuleLibrary* class implements *MyRuleLibraryInteface* interface.
 
 - **SailPointRuleMainBody**
   
