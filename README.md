@@ -167,10 +167,24 @@ Download Apache Maven 3.6.x or higher from [https://maven.apache.org/download.cg
 ## Sail4j Annotations
 You develop your IIQ or IDN Rule in a standard Java class but use Sail4j annotations to describe Rule. 
 
-Annotations are used to control how the rule should be generated. There are 3 annotations available for use:
+Annotations are used to control how the rule should be generated. There are 4 annotations available for use:
 - **SailPointRule**
   
   Class level annotation. You use this to define the rule name, rule type, referencedRules etc.
+- **SailPointReferencedRule**
+  
+  Field level annotation. Use this annotation to indicate the Java class of this field is linked to a Rule (or Rule Library) referenced by the Rule associated with current Java class. This allows Sail4j to resolve the Rule reference automatically based on Java classes depenecy. The annotation provides 2 optional parameters **ruleName** and **ruleClass** (you only need to use one of them) to explictly identify the java class of the referenced Rule. If no parameter is specified, it will use the Java class type of field to identify the java class of the referenced Rule. The matching priority order is described as below: 
+			
+	- if **ruleName** is provided, it always uses rule name to find referenced Rule. 
+	- if **ruleClass** is not provided but **ruleClass** is provided, it uses java class to find referenced Rule.
+	- if no parameter is specified, it uses the Java class type of field to find referenced Rule.
+
+	**Important notes:** 
+	- When static methods are used, you **DO NOT** need to use this annotation, Sail4j will automatically figure out the rule reference if the java class of calling method (static) is linked to a Rule (or Rule Library).
+	- DO NOT use local variable for Referenced Rule Java class as Sail4j is not able to resovle Rule refrence automatically when using local variable. Always use class property/field Referenced Rule (or simply use static method). When declaring class propety/field, ensure the field name is unique in the class and the same name is not used by other local variables. Otherwise it will generate unexpected BeanShell code.
+	- The resolved referened Rule(s) will be merged with what is specified via **referencedRules** parameter of **SailPointRule** annotation.
+
+
 - **SailPointRuleMainBody**
   
   Method level annotation. Use this annotation to indicate the code inside this method will be used as the main body of the Rule.
