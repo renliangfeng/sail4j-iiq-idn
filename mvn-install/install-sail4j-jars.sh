@@ -6,7 +6,7 @@
 # Version: 1.2
 # Date: 25-May-2023
 
-export VERSION=1.2
+export VERSION=1.3
 
 mvn install:install-file -DgroupId=com.sailpoint.sail4j -DartifactId=sail4j -Dversion=${VERSION} -Dpackaging=pom -Dfile=../sail4j-bundle/sail4j-${VERSION}.pom
 mvn org.apache.maven.plugins:maven-install-plugin:3.0.0-M1:install-file -Dfile=../sail4j-bundle/sail4j-api-${VERSION}.jar

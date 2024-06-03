@@ -1,5 +1,10 @@
 Use Sail4j to develop IdentityIQ or IdentityNow Rules
 ================================
+
+**New Version 1.3 is released.**
+
+**Important Notice: If you upgrade from old version to new version 1.3, make sure you upgrade the javaparser-core jar from 3.18.0 to 3.25.10 as well. It will fail to work without doing this. If you use maven, the javaparser-core version upgrade will be handled automatically.**
+
 # About Sail4j
 Sail4j is a tool to convert Java code to Beanshell code used by IdentityIQ or IdentityNow Rules. This way of development improves the development efficiency and code quality through the following:
 - eliminate Rule syntax error. 
@@ -37,14 +42,14 @@ Sail4j is a tool to convert Java code to Beanshell code used by IdentityIQ or Id
 
  		commons-collections-3.2.jar
  		slf4j-api-1.6.1.jar
- 		javaparser-core-3.18.0.jar
+ 		javaparser-core-3.25.10.jar
 		velocity-1.6.2.jar
  		velocity-tools-2.0.jar
 
- 		sail4j-ant-task-1.2.jar
- 		sail4j-api-1.2.jar
- 		sail4j-transform-1.2.jar
-		sail4j-test-helper-1.2
+ 		sail4j-ant-task-1.3.jar
+ 		sail4j-api-1.3.jar
+ 		sail4j-transform-1.3.jar
+		sail4j-test-helper-1.3
  		
 	Note: the folders *s**ail4j-iiq-idn/sail4j-bundle*** and ***sail4j-iiq-idn/dependency-jars*** inside this repository include these jar files or you can download them from internet.
 
