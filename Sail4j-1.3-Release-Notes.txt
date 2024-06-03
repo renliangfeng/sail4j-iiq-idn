@@ -1,0 +1,21 @@
+Sail4j Release Notes
+
+########
+New features in 1.3:
+
+1. Bug fix: comment (single line comment or block comment) above "else if" statement appears between "else" and "if".
+   For example: "else if (cond) //some comment" in Java will be transformed as below in Beanshell Rule:  
+                "else //some comment
+     			 if (cond)"
+
+2. Bug fix: display duplicated block comment (/* */).
+
+3. Upgrade jar library (javaparser-core) verion from 3.18.0 to 3.25.10
+
+
+########
+New features since 1.2:
+
+1. SailPointRule annotation provides a new parameter "withoutSignature" to suppress signature while generating Rule XML file. 
+
+2. Sail4j will automatically resolve rule reference based on java class dependency. New field level annotation "SailPointReferencedRule" is introduced to support this. If static methods are used, rule reference will be resolved automatically. Refer to the document for more details of this new feature.
