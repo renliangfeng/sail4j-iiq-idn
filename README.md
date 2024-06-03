@@ -1,9 +1,11 @@
 Use Sail4j to develop IdentityIQ or IdentityNow Rules
 ================================
 
-**New Version 1.3 is released.**
+
+$${\color{red}**New Version 1.3 is released.**}$$
 
 **Important Notice: If you upgrade from old version to new version 1.3, make sure you upgrade the javaparser-core jar from 3.18.0 to 3.25.10 as well. It will fail to work without doing this. If you use maven, the javaparser-core version upgrade will be handled automatically.**
+
 
 # About Sail4j
 Sail4j is a tool to convert Java code to Beanshell code used by IdentityIQ or IdentityNow Rules. This way of development improves the development efficiency and code quality through the following:
