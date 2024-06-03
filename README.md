@@ -41,10 +41,10 @@ Sail4j is a tool to convert Java code to Beanshell code used by IdentityIQ or Id
 		velocity-1.6.2.jar
  		velocity-tools-2.0.jar
 
- 		sail4j-ant-task-1.1.jar
- 		sail4j-api-1.1.jar
- 		sail4j-transform-1.1.jar
-		sail4j-test-helper-1.1
+ 		sail4j-ant-task-1.2.jar
+ 		sail4j-api-1.2.jar
+ 		sail4j-transform-1.2.jar
+		sail4j-test-helper-1.2
  		
 	Note: the folders *s**ail4j-iiq-idn/sail4j-bundle*** and ***sail4j-iiq-idn/dependency-jars*** inside this repository include these jar files or you can download them from internet.
 
@@ -167,10 +167,56 @@ Download Apache Maven 3.6.x or higher from [https://maven.apache.org/download.cg
 ## Sail4j Annotations
 You develop your IIQ or IDN Rule in a standard Java class but use Sail4j annotations to describe Rule. 
 
-Annotations are used to control how the rule should be generated. There are 3 annotations available for use:
+Annotations are used to control how the rule should be generated. There are 4 annotations available for use:
 - **SailPointRule**
   
   Class level annotation. You use this to define the rule name, rule type, referencedRules etc.
+- **SailPointReferencedRule**
+  
+  Field level annotation. Use this annotation to indicate the Java class of this field is linked to a Rule (or Rule Library) referenced by the Rule associated with current Java class. This allows Sail4j to resolve the Rule reference automatically based on Java classes depenecy. The annotation provides 2 optional parameters **ruleName** and **ruleClass** (you only need to use one of them) to explictly identify the java class of the referenced Rule. If no parameter is specified, it will use the Java class type of field to identify the java class of the referenced Rule. The matching priority order is described as below: 
+			
+	- if **ruleName** is provided, it always uses rule name to find referenced Rule. 
+	- if **ruleClass** is not provided but **ruleClass** is provided, it uses java class to find referenced Rule.
+	- if no parameter is specified, it uses the Java class type of field to find referenced Rule.
+
+	**Important notes:** 
+	- When static methods are used, you **DO NOT** need to use this annotation, Sail4j will automatically figure out the rule reference if the java class of calling method (static) is linked to a Rule (or Rule Library).
+	- DO NOT use local variable for Referenced Rule Java class as Sail4j is not able to resovle Rule refrence automatically when using local variable. Always use class property/field Referenced Rule (or simply use static method). When declaring class propety/field, ensure the field name is unique in the class and the same name is not used by other local variables. Otherwise it will generate unexpected BeanShell code.
+	- The resolved referened Rule(s) will be merged with what is specified via **referencedRules** parameter of **SailPointRule** annotation.
+	- If you have a set method for the Referenced Rule property (like the example below), make sure to apply **IgnoredBySailPointRule** annotation to that method so that this method will not be present in the generated Rule XML.
+
+			@SailPointReferencedRule
+			private MyRuleLibrary myRuleLibrary;
+	
+			@IgnoredBySailPointRule
+			public void setMyRuleLibrary(MyRuleLibrary myRuleLibrary) {
+				this.myRuleLibrary = myRuleLibrary;
+			}
+     	
+		However, if you set the value of Referenced Rule property through the constructor (like the example below), no annotation is required as java contructor is not used by IdentityIQ Rule and will never be generated in Rule XML.
+		   
+		    public class MyRule {
+	
+				@SailPointReferencedRule
+				private MyRuleLibrary myRuleLibrary;
+	
+				public MyRule(MyRuleLibrary myRuleLibrary) {
+					this.myRuleLibrary = myRuleLibrary;
+				}
+
+	**Tips:**
+	- If you want to make your code testable, you can declare the Referenced Rule property type as an interface. This allows you to inject a mocked Referenced Rule object using mock framework like mockito in your junit test cases. Here is the example:
+
+			public class MyRule {
+	
+				@SailPointReferencedRule(ruleClass = MyRuleLibrary.class)
+				private MyRuleLibraryInteface myRuleLibrary;
+	
+				public MyRule(MyRuleLibraryInteface myRuleLibrary) {
+					this.myRuleLibrary = myRuleLibrary;
+				}
+		In this example, *MyRuleLibrary* class implements *MyRuleLibraryInteface* interface.
+
 - **SailPointRuleMainBody**
   
   Method level annotation. Use this annotation to indicate the code inside this method will be used as the main body of the Rule.
