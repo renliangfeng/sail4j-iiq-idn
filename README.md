@@ -3,10 +3,10 @@ Use Sail4j to develop IdentityIQ or IdentityNow Rules
 
 
 > [!NOTE] 
-> **New Version 1.3 is released.**
+> New Version 1.3 is released.
 
 > [!IMPORTANT]
-> **Important Notice: If you upgrade from old version to new version 1.3, make sure you upgrade the javaparser-core jar from 3.18.0 to 3.25.10 as well. Sail4j 1.3 does not work with javaparser-core-3.18.0.jar. You need to manually replace javaparser-core-3.18.0.jar with javaparser-core-3.25.10.jar if you are using Sail4j with SSB. However, if you use Sail4j with Maven, the javaparser-core version upgrade will be handled automatically.**
+> If you upgrade from old version to new version 1.3, make sure you upgrade the javaparser-core jar from 3.18.0 to 3.25.10 as well. Sail4j 1.3 does not work with javaparser-core-3.18.0.jar. If you are using Sail4j with SSB, you need to manually replace javaparser-core-3.18.0.jar with javaparser-core-3.25.10.jar. However, if you use Sail4j with Maven, then javaparser-core version upgrade will be handled automatically.
 
 
 # About Sail4j
