@@ -66,12 +66,10 @@ Sail4j is a tool to convert Java code to Beanshell code used by IdentityIQ or Id
 	Note: the folder ***sail4j-iiq-idn/dependency-jars*** inside this repository include these jar files or you can download them from internet.
 
 - When using Sail4j, you may want to write JUnit Test Cases to test your Java code. Add the following to ***scripts/build.java.xml***.
-
+<!-- run junit tests -->
 	<target name="runUnitTests" depends="compile">
 		<javac srcdir="test-src" source="1.8" target="1.8" destdir="test/classes" debug="true" 	classpathref="build.compile.classpath" 
 			includeantruntime="last"/>
-		
-		<!-- run junit tests -->
     	<junit printsummary="yes" haltonfailure="yes">
     		<classpath>
 				<pathelement location="${build}/classes" />
